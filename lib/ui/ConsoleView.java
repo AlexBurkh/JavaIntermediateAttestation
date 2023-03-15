@@ -40,7 +40,7 @@ public class ConsoleView implements View{
     }
 
     @Override
-    public void println(int num) {
+    public void print(int num) {
         System.out.println(num);
     }
 }

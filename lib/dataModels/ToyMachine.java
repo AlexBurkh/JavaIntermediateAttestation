@@ -7,6 +7,7 @@ import lib.support.Logger;
 
 public class ToyMachine {
     private Logger _logger;
+
     private int _next_id = 0;
     private List<Double> _PDF;
 

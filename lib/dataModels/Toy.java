@@ -35,11 +35,10 @@ public class Toy {
     public void changeWinChance(double chance) {
         this._winChance = chance;
     }
-    public Toy take() {
-        this._amount -= 1;
-        return new Toy(_id, _productName, _winChance, 1);
+    public void takeOne() {
+        _amount -= 1;
     }
-    public void put() {
-        this._amount += 1;
+    public void putOne() {
+        _amount += 1;
     }
 }

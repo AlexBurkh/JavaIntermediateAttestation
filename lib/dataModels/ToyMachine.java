@@ -4,27 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lib.support.Logger;
-import lib.ui.View;
 
 public class ToyMachine {
     private Logger _logger;
-    private View _view;
     private int _next_id = 0;
     private List<Double> _PDF;
 
     private List<Toy> _playable;
     private List<Toy> _won;
 
-    public ToyMachine(Logger _logger, View _view, List<Toy> playable, List<Toy> won) {
+    public ToyMachine(Logger _logger, List<Toy> playable, List<Toy> won) {
         this._logger = _logger;
-        this._view = _view;
         this._playable = playable;
         this._won = won;
         makePDF();
     }
 
-    public ToyMachine(Logger logger, View view) {
-        this(logger, view, new ArrayList<>(), new ArrayList<>());
+    public ToyMachine(Logger logger) {
+        this(logger, new ArrayList<>(), new ArrayList<>());
     }
 
     @Override
@@ -52,6 +49,20 @@ public class ToyMachine {
         }
     }
 
+    private void moveToyToWon(int id) {
+        var toy = _playable.get(id);
+        Toy wonToy = null;
+        if (toy.getAmount() != 1) {
+            toy.takeOne();
+            wonToy = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
+        }
+        else {
+            wonToy = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
+            _playable.remove(id);
+        }
+        _won.add(wonToy);
+    }
+
     public void play() {
         double userRoll = Math.random();
         _logger.INFO("выброшено число " + userRoll);
@@ -66,15 +77,12 @@ public class ToyMachine {
             else {
                 if (userRoll >= _PDF.get(i - 1) && userRoll < _PDF.get(i)) {
                     toyIndex = i;
-                    _logger.INFO("выпала игрушка № " + (toyIndex + 1));
                     break;
                 }
             }
         }
         if (toyIndex >= 0) {
-            Toy t = _playable.get(toyIndex).take();
-            _logger.INFO("имя игрушки: " + t.getProductName());
-            _won.add(t);
+            moveToyToWon(toyIndex);
             _logger.INFO("игрушка перемещена в список выигранных");
         }
         else {

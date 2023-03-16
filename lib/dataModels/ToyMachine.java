@@ -33,29 +33,26 @@ public class ToyMachine {
     }
     
     /**
-     * Сделать функцию плотности вероятности
-     * @variable _PDF - список для хранения самой дискретной функции плотности вероятности
+     * Составить функцию распределения вероятности
+     * @variable _PDF - список для хранения самой дискретной функции распределения вероятности
      * @variable sum - сумма всех вероятностей (для нормализации)
      */
     private void makePDF() {
         this._PDF = new ArrayList<Double>();
         double sum = 0;
-        // Вычисление максимума функции плотности вероятности
+        // Вычисление максимума функции распределения вероятности
         for (Toy t : _playable) {
             sum += t.getWinChance();
         }
-        // Составление нормализованной функции плотности вероятности
+        // Составление нормализованной функции распределения вероятности
         double prev = 0;
         for (Toy t : _playable) {
             prev += t.getWinChance() / sum;
             _PDF.add(prev);
         }
-        if (_PDF.size() > 0) {
-            _logger.INFO("сформирована функция распределения вероятностей");
-        }
     }
 
-    public void roll() {
+    public void play() {
         double userRoll = Math.random();
         _logger.INFO("выброшено число " + userRoll);
         int toyIndex = -1;
@@ -63,7 +60,6 @@ public class ToyMachine {
             if (i == 0) {
                 if (userRoll >= 0 && userRoll < _PDF.get(i)) {
                     toyIndex = 0;
-                    _logger.INFO("выпала игрушка № 1");
                     break;
                 }
             }

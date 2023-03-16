@@ -49,6 +49,17 @@ public class ToyMachine {
         }
     }
 
+    private int current_max_id() {
+        int maxId = 0;
+        for (var toy : _playable) {
+            if (toy.getId() > maxId) {
+                maxId = toy.getId();
+            }
+        }
+        return maxId;
+    }
+
+
     private void moveToyToWon(int id) {
         var toy = _playable.get(id);
         Toy wonToy = null;
@@ -58,7 +69,7 @@ public class ToyMachine {
         }
         else {
             wonToy = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
-            _playable.remove(id);
+            deleteToy(id);
         }
         _won.add(wonToy);
     }
@@ -86,13 +97,31 @@ public class ToyMachine {
             _logger.INFO("игрушка перемещена в список выигранных");
         }
         else {
-            _logger.ERROR("ошибка работы механизма выбора игрушки по броску");
+            _logger.ERROR("ошибка работы механизма выбора игрушки");
         }
     }
-    
     public void addToy(String name, double winChance, int amount) {
         _playable.add(new Toy(this._next_id, name, winChance, amount));
         _next_id += 1;
         makePDF();
+    }
+    public boolean deleteToy(int id) {
+        boolean flag = false;
+        for (var toy : _playable) {
+            if (toy.getId() == id) {
+                _playable.remove(id);
+                flag = true;
+            }
+        }
+        for (int i = 0; i < _playable.size(); i++) {
+            _playable.get(i).reduceId();
+        }
+        if (_playable.size() > 0) {
+            _next_id = current_max_id() + 1;
+        }
+        else {
+            _next_id = 0;
+        }
+        return flag;
     }
 }

@@ -32,6 +32,10 @@ public class Toy {
         return _amount;
     }
 
+    public void reduceId() {
+        _id -= 1;
+    }
+
     public void changeWinChance(double chance) {
         this._winChance = chance;
     }

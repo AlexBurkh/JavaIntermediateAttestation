@@ -37,7 +37,7 @@ public class Toy {
     }
     public Toy take() {
         this._amount -= 1;
-        return this;
+        return new Toy(_id, _productName, _winChance, 1);
     }
     public void put() {
         this._amount += 1;

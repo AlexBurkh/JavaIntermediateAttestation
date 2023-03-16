@@ -25,6 +25,11 @@ public class ToyMachine {
         this(logger, view, new ArrayList<>(), new ArrayList<>());
     }
 
+    @Override
+    public String toString() {
+        return "ToyMachine { next_id=" + _next_id + ", playable=" + _playable + ", won=" + _won + " }";
+    }
+    
     public void roll() {
         List<Double> weights = new ArrayList<Double>();
         double sum = 0;

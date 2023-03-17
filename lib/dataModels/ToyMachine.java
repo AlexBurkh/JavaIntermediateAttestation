@@ -1,11 +1,12 @@
 package lib.dataModels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import lib.support.Logger;
 
-public class ToyMachine {
+public class ToyMachine implements Serializable{
     private Logger _logger;
 
     private int _next_id = 0;

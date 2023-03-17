@@ -59,6 +59,7 @@ class Program {
             }
             case 4:
             {
+                changeWeightsHandler();
                 break;
             }
             case 5:
@@ -75,12 +76,13 @@ class Program {
         return true;
     }
 
-    private static void addToyHandler() {
-        String name = _view.readText("Введите имя игрушки");
-        double winChance = _view.readDouble("Введите вероятность выигрыша игрушки");
-        int amount = _view.readInt("Введите количество игрушек");
-
-        _tm.addToy(name, winChance, amount);
+    private static void gameHandler() {
+        if (! _tm.getPlayable().isEmpty()) {
+            _tm.play();
+        }
+        else {
+            _logger.ERROR("невозможно сыграть, список игрушек пуст");
+        }
     }
 
     private static void getRewardHandler() {
@@ -90,12 +92,25 @@ class Program {
         }
     }
 
-    private static void gameHandler() {
-        if (! _tm.getPlayable().isEmpty()) {
-            _tm.play();
+    private static void addToyHandler() {
+        String name = _view.readText("Введите имя игрушки");
+        double winChance = _view.readDouble("Введите вероятность выигрыша игрушки");
+        int amount = _view.readInt("Введите количество игрушек");
+
+        _tm.addToy(name, winChance, amount);
+    }
+
+    private static void changeWeightsHandler() {
+        _view.println("Список игрушек, в которых можно сменить весовой коэффициент");
+        _view.print(_tm.getPlayable());
+        int id = _view.readInt("Введите id игрушки для смены коэффициента");
+        var toy = _tm.getById(id);
+        if (toy != null) {
+            double newWinChance = _view.readDouble("Введите новый весовой коэффициент");
+            toy.changeWinChance(newWinChance);
         }
         else {
-            _logger.ERROR("невозможно сыграть, список игрушек пуст");
+            _logger.ERROR("Не удалось сменить весовой коэффициент. Игрушка не найдена.");
         }
     }
 

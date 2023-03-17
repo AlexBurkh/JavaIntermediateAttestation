@@ -179,4 +179,13 @@ public class ToyMachine implements Serializable{
         }
         return null;
     }
+
+    public Toy getById(int id) {
+        for (Toy toy : _playable) {
+            if (toy.getId() == id) {
+                return toy;
+            }
+        }
+        return null;
+    }
 }

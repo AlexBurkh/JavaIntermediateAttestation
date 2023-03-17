@@ -38,21 +38,34 @@ class Program {
         _view.println(_tm.toString());
         _view.print(mainMenu);
         int userInput = _view.readInt();
-        if (userInput == 1) {
-            gameHandler();
+        switch(userInput) {
+            case 1:
+            {
+                gameHandler();
+                break;
+            }
+            case 2:
+            {
+                getRewardHandler();
+                break;
+            }
+                
+            case 3:
+            {
+                addToyHandler();
+                break;
+            }
+            case 4:
+            {
+                exit();
+                return false;
+            }
+            default:
+            {
+                _logger.WARNING("некорректный ввод");
+                break;
+            }  
         }
-        if (userInput == 2) {
-            getRewardHandler();
-        }
-        if (userInput == 3) {
-            addToyHandler();
-        }
-        if (userInput == 4) {
-            exit();
-            return false;
-        }
-        _view.println("Некорректный ввод. Повторите попытку");
-        _logger.WARNING("некорректный ввод");
         return true;
     }
 
@@ -90,15 +103,14 @@ class Program {
         ArrayList<Toy> playable = new ArrayList<>();
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("playable.dat")))
         {
-            playable = ((ArrayList<Toy>)ois.readObject());
+            Object obj = ois.readObject();
+            playable = (ArrayList<Toy>)obj;
             
         }
         catch(Exception ex){
             _logger.CRYTICAL(ex.getMessage());
         }
-        System.out.println(playable);
         _tm = new ToyMachine(new ConsoleLogger(), playable, new ArrayList<Toy>());
-        System.out.println(_tm);
     }
 
     private static void init() {
@@ -109,5 +121,6 @@ class Program {
 
     private static void exit() {
         saveToyMachine();
+        _view.println("До свидания!");
     }
 }

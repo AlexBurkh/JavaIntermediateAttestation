@@ -8,7 +8,7 @@ public class ConsoleView implements View {
 
     @Override
     public int readInt(String text) {
-        print(text + " >");
+        print(text + "> ");
         return readInt();
     }
 
@@ -20,7 +20,7 @@ public class ConsoleView implements View {
 
     @Override
     public double readDouble(String text) {
-        print(text + " >");
+        print(text + "> ");
         return readDouble();
     }
 
@@ -32,7 +32,7 @@ public class ConsoleView implements View {
 
     @Override
     public String readText(String text) {
-        print(text + " >");
+        print(text + "> ");
         return readText();
     }
 

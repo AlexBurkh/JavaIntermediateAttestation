@@ -31,6 +31,10 @@ public class ToyMachine implements Serializable{
         return "ToyMachine { next_id=" + _next_id + ", playable=" + _playable + ", won=" + _won + " }";
     }
 
+    public List<Toy> getPlayable() {
+        return _playable;
+    }
+
     /**
      * Составить функцию распределения вероятности
      * 
@@ -153,5 +157,12 @@ public class ToyMachine implements Serializable{
             _next_id = 0;
         }
         return flag;
+    }
+
+    public Toy getReward() {
+        if (! _won.isEmpty()) {
+            return _won.get(0);
+        }
+        return null;
     }
 }

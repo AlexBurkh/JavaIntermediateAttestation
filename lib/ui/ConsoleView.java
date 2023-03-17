@@ -1,8 +1,9 @@
 package lib.ui;
 
+import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleView implements View{
+public class ConsoleView implements View {
     Scanner sc;
 
     public ConsoleView() {
@@ -11,7 +12,7 @@ public class ConsoleView implements View{
 
     @Override
     public int readInt(String text) {
-        print(text);
+        print(text + " >");
         return readInt();
     }
 
@@ -21,8 +22,19 @@ public class ConsoleView implements View{
     }
 
     @Override
+    public double readDouble(String text) {
+        print(text + " >");
+        return readDouble();
+    }
+
+    @Override
+    public double readDouble() {
+        return sc.nextDouble();
+    }
+
+    @Override
     public String readText(String text) {
-        print(text);
+        print(text + " >");
         return readText();
     }
 
@@ -43,4 +55,19 @@ public class ConsoleView implements View{
     public void print(int num) {
         System.out.println(num);
     }
+
+    @Override
+    public <T> void print(List<T> lst) {
+        for (T item : lst) {
+            System.out.println(item);
+        }
+    }
+
+    @Override
+    public <T> void print(T[] arr) {
+        for (T item : arr) {
+            System.out.println(item);
+        }
+    }
+    
 }

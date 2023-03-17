@@ -25,3 +25,6 @@ hs_err_pid*
 #tests
 tests/
 /tests
+
+#data files
+*.dat

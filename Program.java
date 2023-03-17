@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import lib.dataModels.Toy;
 import lib.dataModels.ToyMachine;
 import lib.support.Logger;
 import lib.support.ConsoleLogger;
@@ -16,15 +15,60 @@ class Program {
     static View _view;
     static ToyMachine _tm;
 
+    static final String[] mainMenu = {"1. Сыграть", "2. Забрать выигранную игрушку", "3. Добавить игрушку", "4. Выйти"};
+
     public static void main(String[] args) {
         init();
         run();
     }
 
     private static void run() {
-        
-        
+        boolean status = true;
+        _view.println("Добро пожаловать");
 
+        while(status) {
+            status = mainMenuHandler();
+        }
+    }
+
+    private static boolean mainMenuHandler() {
+        _view.println(_tm.toString());
+        _view.print(mainMenu);
+        int userInput = _view.readInt();
+        if (userInput == 1) {
+            gameHandler();
+        }
+        if (userInput == 2) {
+            getRewardHandler();
+        }
+        if (userInput == 3) {
+            addToyHandler();
+        }
+        if (userInput == 4) {
+            exit();
+            return false;
+        }
+        _view.println("Некорректный ввод. Повторите попытку");
+        _logger.WARNING("некорректный ввод");
+        return true;
+    }
+
+    private static void addToyHandler() {
+        String name = _view.readText("Введите имя игрушки");
+        double winChance = _view.readDouble("Введите вероятность выигрыша игрушки");
+        int amount = _view.readInt("Введите количество игрушек");
+
+        _tm.addToy(name, winChance, amount);
+    }
+
+    private static void getRewardHandler() {
+        var toy = _tm.getReward();
+        if (toy != null) {
+            _logger.INFO("выдана игрушка " + toy.getProductName());
+        }
+    }
+
+    private static void gameHandler() {
     }
 
     private static void saveToyMachine() {

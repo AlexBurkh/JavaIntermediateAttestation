@@ -175,7 +175,7 @@ public class ToyMachine implements Serializable{
             else {
                 _won.remove(0);
             }
-            return toy;
+            return reward;
         }
         return null;
     }

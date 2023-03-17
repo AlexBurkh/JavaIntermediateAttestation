@@ -4,28 +4,28 @@ import java.io.Serializable;
 
 public class Toy implements Serializable{
     private int _id;
-    private String _productName;
+    private String _name;
     private double _winChance;
     private int _amount;
 
-    public Toy(int id, String productName, double winChance, int amount) {
+    public Toy(int id, String name, double winChance, int amount) {
         this._id = id;
-        this._productName = productName;
+        this._name = name;
         this._winChance = winChance;
         this._amount = amount;
     }
 
     @Override
     public String toString() {
-        return "Toy {id: " + _id + ", productName: " + _productName + ", chanceWeight: " + _winChance + ", amount: " + _amount +"}";
+        return "Toy {id: " + _id + ", name: " + _name + ", chanceWeight: " + _winChance + ", amount: " + _amount +"}";
     }
 
     /* GETTERS */
     public int getId() {
         return _id;
     }
-    public String getProductName() {
-        return _productName;
+    public String getName() {
+        return _name;
     }
     public double getWinChance() {
         return _winChance;
@@ -56,7 +56,7 @@ public class Toy implements Serializable{
         final int prime = 31;
         int result = 1;
         result = prime * result + _id;
-        result = prime * result + ((_productName == null) ? 0 : _productName.hashCode());
+        result = prime * result + ((_name == null) ? 0 : _name.hashCode());
         long temp;
         temp = Double.doubleToLongBits(_winChance);
         result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -74,10 +74,10 @@ public class Toy implements Serializable{
         Toy other = (Toy) obj;
         if (_id != other._id)
             return false;
-        if (_productName == null) {
-            if (other._productName != null)
+        if (_name == null) {
+            if (other._name != null)
                 return false;
-        } else if (!_productName.equals(other._productName))
+        } else if (!_name.equals(other._name))
             return false;
         if (Double.doubleToLongBits(_winChance) != Double.doubleToLongBits(other._winChance))
             return false;

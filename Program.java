@@ -86,7 +86,7 @@ class Program {
     private static void getRewardHandler() {
         var toy = _tm.getReward();
         if (toy != null) {
-            _logger.INFO("выдана игрушка " + toy.getProductName());
+            _logger.INFO("выдана игрушка " + toy.getName());
         }
     }
 

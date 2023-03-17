@@ -16,7 +16,8 @@ class Program {
 
     private static void run() {
         init();
-        _view.print("Привет");
+        
+        
     }
 
     private static void init() {

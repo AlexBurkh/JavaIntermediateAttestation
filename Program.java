@@ -17,7 +17,7 @@ class Program {
     static View _view;
     static ToyMachine _tm;
 
-    static final String[] mainMenu = {"1. Сыграть", "2. Забрать выигранную игрушку", "3. Добавить игрушку", "4. Выйти"};
+    static final String[] mainMenu = {"1. Сыграть", "2. Забрать выигранную игрушку", "3. Добавить игрушку", "4. Сменить весовой коэффициент", "5. Выйти"};
 
     public static void main(String[] args) {
         init();
@@ -58,6 +58,10 @@ class Program {
                 break;
             }
             case 4:
+            {
+                break;
+            }
+            case 5:
             {
                 exit();
                 return false;

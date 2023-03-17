@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import lib.dataModels.Toy;
 import lib.dataModels.ToyMachine;
@@ -33,7 +34,10 @@ class Program {
     }
 
     private static boolean mainMenuHandler() {
-        _view.println(_tm.toString());
+        _view.println("Игрушки в розыгрыше:");
+        _view.print(_tm.getPlayable());
+        _view.println("Выигранные игрушки, которые можно забрать:");
+        _view.print(_tm.getWon());
         _view.print(mainMenu);
         int userInput = _view.readInt();
         switch(userInput) {
@@ -83,6 +87,12 @@ class Program {
     }
 
     private static void gameHandler() {
+        if (! _tm.getPlayable().isEmpty()) {
+            _tm.play();
+        }
+        else {
+            _logger.ERROR("невозможно сыграть, список игрушек пуст");
+        }
     }
 
     private static void saveToyMachine() {
@@ -98,7 +108,7 @@ class Program {
     }
     
     private static void loadToyMachine() {
-        ArrayList<Toy> playable = new ArrayList<>();
+        List<Toy> playable = new ArrayList<>();
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("playable.dat")))
         {
             Object obj = ois.readObject();

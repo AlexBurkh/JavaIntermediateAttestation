@@ -15,24 +15,29 @@ public class ToyMachine implements Serializable{
     private List<Toy> _playable;
     private List<Toy> _won;
 
+    /* CONTRUCTORS */
     public ToyMachine(Logger _logger, List<Toy> playable, List<Toy> won) {
         this._logger = _logger;
         this._playable = playable;
         this._won = won;
         makePDF();
     }
-
     public ToyMachine(Logger logger) {
         this(logger, new ArrayList<>(), new ArrayList<>());
     }
 
+    /* OVERRIDE */
     @Override
     public String toString() {
         return "ToyMachine { next_id=" + _next_id + ", playable=" + _playable + ", won=" + _won + " }";
     }
 
+    /* GETTERS */
     public List<Toy> getPlayable() {
         return _playable;
+    }
+    public List<Toy> getWon() {
+        return _won;
     }
 
     /**
@@ -89,7 +94,13 @@ public class ToyMachine implements Serializable{
             wonToy = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
             deleteToy(id);
         }
-        _won.add(wonToy);
+        if (_won.contains(wonToy)) {
+            int index = _won.indexOf(wonToy);
+            _won.get(index).putOne();
+        }
+        else{
+            _won.add(wonToy);
+        }
     }
 
     /**
@@ -142,12 +153,7 @@ public class ToyMachine implements Serializable{
      */
     public boolean deleteToy(int id) {
         boolean flag = false;
-        for (var toy : _playable) {
-            if (toy.getId() == id) {
-                _playable.remove(id);
-                flag = true;
-            }
-        }
+        _playable.remove(id);
         for (int i = 0; i < _playable.size(); i++) {
             _playable.get(i).reduceId();
         }
@@ -161,7 +167,15 @@ public class ToyMachine implements Serializable{
 
     public Toy getReward() {
         if (! _won.isEmpty()) {
-            return _won.get(0);
+            var toy = _won.get(0);
+            var reward = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
+            if (toy.getAmount() > 1) {
+                toy.takeOne();
+            }
+            else {
+                _won.remove(0);
+            }
+            return toy;
         }
         return null;
     }

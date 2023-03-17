@@ -3,7 +3,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import lib.dataModels.Toy;
 import lib.dataModels.ToyMachine;
 import lib.support.Logger;
 import lib.support.ConsoleLogger;
@@ -73,9 +76,9 @@ class Program {
 
     private static void saveToyMachine() {
 
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("tm.dat")))
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("playable.dat")))
         {
-            oos.writeObject(_tm);
+            oos.writeObject(_tm.getPlayable());
         }
         catch(Exception ex){
              
@@ -84,24 +87,24 @@ class Program {
     }
     
     private static void loadToyMachine() {
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tm.dat")))
+        ArrayList<Toy> playable = new ArrayList<>();
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("playable.dat")))
         {
-            _tm =(ToyMachine)ois.readObject();
+            playable = ((ArrayList<Toy>)ois.readObject());
+            
         }
         catch(Exception ex){
-             
-            System.out.println(ex.getMessage());
+            _logger.CRYTICAL(ex.getMessage());
         }
+        System.out.println(playable);
+        _tm = new ToyMachine(new ConsoleLogger(), playable, new ArrayList<Toy>());
+        System.out.println(_tm);
     }
 
     private static void init() {
         _logger = new ConsoleLogger();
         _view = new ConsoleView();
-        File f = new File("tm.dat");
-        if (f.exists()) {
-            loadToyMachine();
-        }
-        _tm = new ToyMachine(_logger);
+        loadToyMachine();
     }
 
     private static void exit() {

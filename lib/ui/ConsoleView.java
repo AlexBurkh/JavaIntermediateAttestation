@@ -4,11 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleView implements View {
-    Scanner sc;
-
-    public ConsoleView() {
-        this.sc = new Scanner(System.in);
-    }
+    Scanner sc = new Scanner(System.in);
 
     @Override
     public int readInt(String text) {
@@ -18,7 +14,8 @@ public class ConsoleView implements View {
 
     @Override
     public int readInt() {
-        return sc.nextInt();
+        int num = sc.nextInt();
+        return num;
     }
 
     @Override
@@ -29,7 +26,8 @@ public class ConsoleView implements View {
 
     @Override
     public double readDouble() {
-        return sc.nextDouble();
+        double num = sc.nextDouble();
+        return num;
     }
 
     @Override
@@ -40,7 +38,11 @@ public class ConsoleView implements View {
 
     @Override
     public String readText() {
-        return sc.nextLine();
+        String text = "";
+        while (text.length() == 0) {
+            text = sc.nextLine();
+        }
+        return text;
     }
 
     public void print(String text) {
@@ -69,5 +71,4 @@ public class ConsoleView implements View {
             System.out.println(item);
         }
     }
-    
 }

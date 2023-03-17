@@ -1,6 +1,8 @@
 package lib.dataModels;
 
-public class Toy {
+import java.io.Serializable;
+
+public class Toy implements Serializable{
     private int _id;
     private String _productName;
     private double _winChance;

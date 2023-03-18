@@ -89,9 +89,9 @@ public class ToyMachine implements Serializable{
         Toy wonToy = null;
         if (toy.getAmount() != 1) {
             toy.takeOne();
-            wonToy = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
+            wonToy = new Toy(toy.getId(), toy.getName(), toy.getWinChance(), 1);
         } else {
-            wonToy = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
+            wonToy = new Toy(toy.getId(), toy.getName(), toy.getWinChance(), 1);
             deleteToy(id);
         }
         if (_won.contains(wonToy)) {
@@ -168,7 +168,7 @@ public class ToyMachine implements Serializable{
     public Toy getReward() {
         if (! _won.isEmpty()) {
             var toy = _won.get(0);
-            var reward = new Toy(toy.getId(), toy.getProductName(), toy.getWinChance(), 1);
+            var reward = new Toy(toy.getId(), toy.getName(), toy.getWinChance(), 1);
             if (toy.getAmount() > 1) {
                 toy.takeOne();
             }
@@ -176,6 +176,15 @@ public class ToyMachine implements Serializable{
                 _won.remove(0);
             }
             return reward;
+        }
+        return null;
+    }
+
+    public Toy getById(int id) {
+        for (Toy toy : _playable) {
+            if (toy.getId() == id) {
+                return toy;
+            }
         }
         return null;
     }
